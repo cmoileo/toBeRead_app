@@ -5,6 +5,8 @@ import * as React from 'react';
 import { Text as RNText } from 'react-native';
 import { cn } from '~/lib/utils';
 
+const TextClassContext = React.createContext<string | undefined>(undefined);
+
 const textVariants = cva('web:select-text', {
   variants: {
     size: {
@@ -21,6 +23,7 @@ const textVariants = cva('web:select-text', {
       '7xl': 'text-7xl',
     },
     weight: {
+      thin: 'font-thin',
       normal: 'font-normal',
       medium: 'font-medium',
       semibold: 'font-semibold',
@@ -57,6 +60,7 @@ const Text = React.forwardRef<TextRef, TextProps>(
     { className, size, weight, align, variant, asChild = false, ...props },
     ref,
   ) => {
+    const textClass = React.useContext(TextClassContext);
     const Component = asChild ? Slot.Text : RNText;
     return (
       <Component
@@ -73,4 +77,4 @@ const Text = React.forwardRef<TextRef, TextProps>(
 
 Text.displayName = 'Text';
 
-export { Text, textVariants };
+export { Text, textVariants, TextClassContext };

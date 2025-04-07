@@ -17,12 +17,10 @@ import * as React from 'react';
 import { NAV_THEME } from '~/lib/constants';
 import { useColorScheme } from '~/lib/useColorScheme';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
   colors: NAV_THEME.light,
 };
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const DARK_THEME: Theme = {
   ...DarkTheme,
   colors: NAV_THEME.dark,
@@ -34,17 +32,21 @@ export { ErrorBoundary } from 'expo-router';
 
 export default function RootLayout() {
   const { isDarkColorScheme } = useColorScheme();
-  const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+  const [isColorSchemeLoaded, setIsColorSchemeLoaded] =
+    React.useState<boolean>(false);
   const [loaded] = useFonts({
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-require-imports
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
   useEffect(() => {
-    if (loaded) {
-      setIsColorSchemeLoaded(true);
-      SplashScreen.hideAsync();
-    }
+    const initialize = async () => {
+      if (loaded) {
+        setIsColorSchemeLoaded(true);
+        SplashScreen.hideAsync();
+      }
+    };
+
+    initialize();
   }, [loaded]);
 
   if (!isColorSchemeLoaded || !loaded) {
@@ -52,10 +54,16 @@ export default function RootLayout() {
   }
 
   return (
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="(auth)"
+          options={{
+            headerShown: false,
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+          }}
+        />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
