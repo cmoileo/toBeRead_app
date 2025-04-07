@@ -1,9 +1,15 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
+import { Text } from '~/components/ui/text';
 
 export default function HomeScreen() {
   return (
     <View>
-      <Text className={'text-red-600 mt-32 text-2xl'}>
+      <Text
+        variant={'primary'}
+        size={'lg'}
+        weight={'normal'}
+        className={'text-primary mt-36'}
+      >
         Welcome to the Home Screen!
       </Text>
     </View>
