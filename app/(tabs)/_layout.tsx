@@ -18,15 +18,14 @@ export default function TabLayout() {
           },
           default: {},
         }),
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home'
+          title: 'Home',
         }}
       />
-
-
     </Tabs>
   );
 }
