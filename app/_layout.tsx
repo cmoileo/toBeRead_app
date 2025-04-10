@@ -17,6 +17,7 @@ import * as React from 'react';
 import { NAV_THEME } from '~/lib/constants';
 import { useColorScheme } from '~/lib/useColorScheme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 
 const LIGHT_THEME: Theme = {
   ...DefaultTheme,
@@ -55,24 +56,26 @@ export default function RootLayout() {
   }
 
   return (
-    <GestureHandlerRootView>
-      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-        <Stack
-          screenOptions={{
-            gestureEnabled: true,
-            gestureDirection: 'horizontal',
-          }}
-        >
-          <Stack.Screen
-            name="(auth)"
-            options={{
-              headerShown: false,
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <GestureHandlerRootView>
+        <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+          <Stack
+            screenOptions={{
+              gestureEnabled: true,
+              gestureDirection: 'horizontal',
             }}
-          />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </GestureHandlerRootView>
+          >
+            <Stack.Screen
+              name="(auth)"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </GestureHandlerRootView>
+    </TouchableWithoutFeedback>
   );
 }
